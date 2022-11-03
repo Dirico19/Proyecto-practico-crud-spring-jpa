@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="index :: head"></head>
+<body>
+
+	<header th:replace="index :: header"></header>
+	
+	<div class="container mt-3" style="margin-bottom: 60px;">
+		<h1 th:text="${encabezado}"></h1>
+		<hr>
+		<form th:action="@{/Cliente/Registro}" th:object="${cliente}" method="post" class="row">
+		<div class="col-sm-4">
+			<input type="hidden" th:field="*{id}">
+			<div class="mb-3">
+				<label for="nombre" class="form-label">Nombre</label>
+				<input type="text" class="form-control" th:field="*{nombre}">
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="apellido" class="form-label">Apellido</label>
+				<input type="text" class="form-control" th:field="*{apellido}">
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="fecNacimiento" class="form-label">Fecha de Nacimiento</label>
+				<input type="date" class="form-control" th:field="*{fecNacimiento}">
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('fecNacimiento')}" th:errors="*{fecNacimiento}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="telefono" class="form-label">Teléfono</label>
+				<input type="number" class="form-control" th:field="*{telefono}">
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="text" class="form-control" th:field="*{email}">
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			</div>
+			<div class="mb-3">
+				<label for="ciudad" class="form-label">Ciudad</label>
+				<select class="form-select" th:field="*{ciudad}">
+					<option value="">-- Seleccione --</option>
+					<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}"></option>
+				</select>
+				<div class="form-text text-danger" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"></div>
+			</div>
+			<div class="mb-3">
+				<a th:href="@{/Cliente/Listado}" class="btn btn-info">Volver</a>
+				<button type="submit" class="btn btn-success">Registrar</button>
+			</div>
+		</div>
+		</form>
+	</div>
+	
+	<footer th:replace="index :: footer"></footer>
+
+</body>
+</html>

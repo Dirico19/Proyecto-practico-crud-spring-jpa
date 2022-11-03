@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="index :: head"></head>
+<body>
+	<header th:replace="index :: header"></header>
+	
+	<div class="container mt-3">
+		<h1 th:text="${encabezado}"></h1>
+		<hr>
+		<div class="row mb-3">
+			<div class="col-sm-auto">
+				<a th:href="@{/Cliente/Registro}" class="btn btn-primary"><span th:text="'Nuevo Cliente'"></span> <i class="bi bi-person-plus"></i></a>
+			</div>
+			<div class="col" th:if="${mensaje}!=null">
+				<div class="alert alert-dismissible fade show" role="alert" th:classappend="${tipo}">
+					<span th:text="${mensaje}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+				</div>
+			</div>
+		</div>
+		<form th:action="@{/Cliente/Listado}">
+			<div class="row mb-3">
+				<label class="col-form-label col-sm-auto" for="nombre">Ingrese un nombre</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="nombre" th:value="${nombre}">
+				</div>
+				<label class="col-form-label col-sm-auto" for="apellido">Ingrese un apellido</label>
+				<div class="col-sm-3">
+					<input class="form-control" type="text" name="apellido" th:value="${apellido}">
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-info"><i class="bi bi-search"></i> Buscar</button>
+					<a class="btn btn-secondary" th:href="@{/Cliente/Listado}"><i class="bi bi-trash2"></i> Limpiar</a>
+				</div>
+			</div>
+		</form>
+		<table class="table table-striped">
+			<thead class="table-primary">
+				<tr class="text-center">
+					<th class="text-center">ID</th>
+					<th>NOMBRE</th>
+					<th>APELLIDO</th>
+					<th>FEC.NACIMIENTO</th>
+					<th>TELÉFONO</th>
+					<th>EMAIL</th>
+					<th>CIUDAD</th>
+					<th class="text-center">ACCIONES</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${clientes}" class="text-center">
+					<th th:text="${c.id}" class="text-center"></th>
+					<td th:text="${c.nombre}"></td>
+					<td th:text="${c.apellido}"></td>
+					<td th:text="${#dates.format(c.fecNacimiento,'dd/MM/yyyy')}"></td>
+					<td th:text="${c.telefono}"></td>
+					<td th:text="${c.email}"></td>
+					<td th:text="${c.ciudad.nombre}"></td>
+					<td class="text-center">
+						<a th:href="@{/Cliente/Editar/}+${c.id}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+						<a th:href="@{/Cliente/Eliminar/}+${c.id}" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<footer th:replace="index :: footer"></footer>	
+</body>
+</html>
